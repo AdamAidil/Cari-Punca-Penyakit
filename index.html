@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Untuk Tahu Punca Penyakit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 18px;
+      text-align: left;
+    }
+    input, select, button {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #222;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <h1>Untuk Tahu Punca Penyakit</h1>
+
+  <label for="nama">Masukkan Nama Pesakit (dalam tulisan Arab/Jawi):</label>
+  <input type="text" id="nama" placeholder="Contoh: فاطمة">
+
+  <label for="hari">Pilih Hari (dalam tulisan Arab):</label>
+  <select id="hari">
+    <option value="13">الأحد (Ahad)</option>
+    <option value="611">الإثنين (Isnin)</option>
+    <option value="1031">الثلاثاء (Selasa)</option>
+    <option value="209">الأربعاء (Rabu)</option>
+    <option value="710">الخميس (Khamis)</option>
+    <option value="118">الجمعة (Jumaat)</option>
+    <option value="468">السبت (Sabtu)</option>
+  </select>
+
+  <button onclick="kiraPunca()">Kira Punca</button>
+
+  <div class="result" id="keputusan"></div>
+
+  <script>
+    const nilaiHuruf = {
+      'ا': 1, 'ب': 2, 'ج': 3, 'د': 4, 'ه': 5, 'و': 6, 'ز': 7,
+      'ح': 8, 'ط': 9, 'ي': 10, 'ك': 20, 'ل': 30, 'م': 40, 'ن': 50,
+      'س': 60, 'ع': 70, 'ف': 80, 'ص': 90, 'ق': 100, 'ر': 200,
+      'ش': 300, 'ت': 400, 'ث': 500, 'خ': 600, 'ذ': 700, 'ض': 800,
+      'ظ': 900, 'غ': 1000
+    };
+
+    function kiraPunca() {
+      const nama = document.getElementById("nama").value.trim();
+      const hari = parseInt(document.getElementById("hari").value);
+
+      let jumlah = 0;
+      for (let huruf of nama) {
+        if (nilaiHuruf[huruf]) {
+          jumlah += nilaiHuruf[huruf];
+        }
+      }
+
+      jumlah += hari + 9;
+
+      let baki = jumlah % 7;
+      if (baki === 0) baki = 7;
+
+      let hasil = "";
+      switch (baki) {
+        case 1:
+          hasil = "Penyakit itu daripada jin.";
+          break;
+        case 2:
+          hasil = "Penyakit itu daripada angin, udara.";
+          break;
+        case 3:
+          hasil = "Penyakit itu daripada guna-guna (sihir).";
+          break;
+        case 4:
+          hasil = "Penyakit itu daripada kena mata orang.";
+          break;
+        case 5:
+          hasil = "Penyakit itu daripada pendarahan.";
+          break;
+        case 6:
+          hasil = "Penyakit itu daripada penyakit kuning.";
+          break;
+        case 7:
+          hasil = "Penyakit itu daripada penyakit demam.";
+          break;
+      }
+
+      document.getElementById("keputusan").innerText = `Baki: ${baki}\n${hasil}`;
+    }
+  </script>
+</body>
+</html>
